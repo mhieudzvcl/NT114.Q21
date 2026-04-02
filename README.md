@@ -79,5 +79,5 @@ Production-oriented thesis scaffold with:
   - Error rate (4xx + 5xx)
   - Average and max latency
 
-## Demo script
-- `docs/demo/KICH_BAN_BAO_VE_12_PHUT.md`
+## Demo
+- `update in the future...`
