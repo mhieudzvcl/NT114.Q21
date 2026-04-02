@@ -1,8 +1,8 @@
-import { ArrayMinSize, IsArray, IsEnum, IsOptional, IsString, ValidateNested } from "class-validator";
+import { ArrayMinSize, IsArray, IsEnum, IsNumber, IsOptional, IsString, ValidateNested } from "class-validator";
 import { Type } from "class-transformer";
 class OrderItemDto {
   @IsString() productId!: string;
-  qty!: number;
+  @IsNumber() qty!: number;
 }
 export class CreateOrderDto {
   @IsOptional() @IsString() userId?: string;
