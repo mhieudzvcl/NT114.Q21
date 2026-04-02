@@ -1,0 +1,88 @@
+version: "3.9"
+services:
+  mongo:
+    image: mongo:7
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongo_data:/data/db
+
+  api-gateway:
+    build: ./services/api-gateway
+    ports:
+      - "8080:8080"
+    environment:
+      - PORT=8080
+
+      - AUTH_SERVICE_URL=http://auth-service:8081
+      - USER_SERVICE_URL=http://user-service:8082
+      - PRODUCT_SERVICE_URL=http://product-service:8083
+      - ORDER_SERVICE_URL=http://order-service:8084
+      - NOTIFICATION_SERVICE_URL=http://notification-service:8085
+      - JWT_SECRET=${JWT_SECRET}
+    depends_on:
+      - auth-service
+      - user-service
+      - product-service
+      - order-service
+      - notification-service
+
+  auth-service:
+    build: ./services/auth-service
+    ports: ["8081:8081"]
+    environment:
+      - PORT=8081
+      - MONGO_URI=${MONGO_URI}
+      - DB_NAME=auth_db
+      - JWT_SECRET=${JWT_SECRET}
+    depends_on: [mongo]
+
+  user-service:
+    build: ./services/user-service
+    ports: ["8082:8082"]
+    environment:
+      - PORT=8082
+      - MONGO_URI=${MONGO_URI}
+      - DB_NAME=user_db
+    depends_on: [mongo]
+
+  product-service:
+    build: ./services/product-service
+    ports: ["8083:8083"]
+    environment:
+      - PORT=8083
+      - MONGO_URI=${MONGO_URI}
+      - DB_NAME=product_db
+    depends_on: [mongo]
+
+  order-service:
+    build: ./services/order-service
+    ports: ["8084:8084"]
+    environment:
+      - PORT=8084
+      - MONGO_URI=${MONGO_URI}
+      - DB_NAME=order_db
+    depends_on: [mongo]
+
+  notification-service:
+    build: ./services/notification-service
+    ports: ["8085:8085"]
+    environment:
+      - PORT=8085
+      - MONGO_URI=${MONGO_URI}
+      - DB_NAME=notification_db
+    depends_on: [mongo]
+
+  frontend-web:
+    build: ./apps/frontend-web
+    ports: ["3000:3000"]
+    volumes:
+      - ./apps/frontend-web:/app
+      - /app/node_modules
+    environment:
+      - VITE_API_BASE=http://localhost:8080
+    depends_on:
+      - api-gateway
+
+volumes:
+  mongo_data:

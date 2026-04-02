@@ -1,0 +1,52 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: grafana-dashboard-thesis
+  namespace: observability
+data:
+  thesis-overview.json: |
+    {
+      "id": null,
+      "uid": "thesis-overview",
+      "title": "Thesis Microservices Overview",
+      "timezone": "browser",
+      "schemaVersion": 39,
+      "version": 1,
+      "refresh": "10s",
+      "panels": [
+        {
+          "type": "stat",
+          "title": "Gateway RSS Memory (bytes)",
+          "gridPos": { "h": 6, "w": 8, "x": 0, "y": 0 },
+          "targets": [
+            {
+              "expr": "nodejs_process_resident_memory_bytes{instance=\"api-gateway.thesis-dev.svc.cluster.local:8080\"}"
+            }
+          ]
+        },
+        {
+          "type": "stat",
+          "title": "Order Service CPU User (us)",
+          "gridPos": { "h": 6, "w": 8, "x": 8, "y": 0 },
+          "targets": [
+            {
+              "expr": "nodejs_process_cpu_user_microseconds{instance=\"order-service.thesis-dev.svc.cluster.local:8084\"}"
+            }
+          ]
+        },
+        {
+          "type": "timeseries",
+          "title": "All Services Heap Used",
+          "gridPos": { "h": 8, "w": 24, "x": 0, "y": 6 },
+          "targets": [
+            {
+              "expr": "nodejs_process_heap_used_bytes{app_group=\"thesis-microservices\"}",
+              "legendFormat": "{{instance}}"
+            }
+          ]
+        }
+      ],
+      "templating": {
+        "list": []
+      }
+    }

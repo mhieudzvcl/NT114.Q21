@@ -1,0 +1,21 @@
+{
+  "name": "thesis-devsecops-monorepo",
+  "private": true,
+  "workspaces": [
+    "apps/frontend-web",
+    "services/*"
+  ],
+  "scripts": {
+    "seed:demo": "node scripts/seed-demo.mjs",
+    "test:api": "jest --runInBand",
+    "load:k6": "k6 run tests/load/k6-gateway.js"
+  },
+  "devDependencies": {
+    "jest": "^29.7.0",
+    "supertest": "^7.1.1"
+  },
+  "dependencies": {
+    "lucide-react": "^1.7.0",
+    "mongodb": "^7.1.1"
+  }
+}
