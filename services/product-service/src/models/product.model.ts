@@ -7,6 +7,8 @@ export interface IProduct {
   price?: number;
   stock?: number;
   status?: "ACTIVE" | "INACTIVE";
+  category?: string;
+  imageUrl?: string;
 }
 
 const ProductSchema = new mongoose.Schema<IProduct>(
@@ -16,7 +18,9 @@ const ProductSchema = new mongoose.Schema<IProduct>(
     description: String,
     price: Number,
     stock: Number,
-    status: { type: String, enum: ["ACTIVE", "INACTIVE"], default: "ACTIVE" }
+    status: { type: String, enum: ["ACTIVE", "INACTIVE"], default: "ACTIVE" },
+    category: String,
+    imageUrl: String
   },
   { timestamps: true }
 );

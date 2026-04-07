@@ -15,6 +15,12 @@ export class CreateProductDto {
   stock!: number;
   @IsEnum(["ACTIVE", "INACTIVE"])
   status!: "ACTIVE" | "INACTIVE";
+  @IsOptional()
+  @IsString()
+  category?: string;
+  @IsOptional()
+  @IsString()
+  imageUrl?: string;
 }
 export class UpdateProductDto {
   @IsOptional() @IsString() name?: string;
@@ -22,4 +28,6 @@ export class UpdateProductDto {
   @IsOptional() @IsNumber() @Min(0) price?: number;
   @IsOptional() @IsNumber() @Min(0) stock?: number;
   @IsOptional() @IsEnum(["ACTIVE", "INACTIVE"]) status?: "ACTIVE" | "INACTIVE";
+  @IsOptional() @IsString() category?: string;
+  @IsOptional() @IsString() imageUrl?: string;
 }

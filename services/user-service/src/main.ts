@@ -23,6 +23,10 @@ async function bootstrap() {
   app.useGlobalInterceptors(new TransformInterceptor());
   app.useGlobalFilters(new HttpExceptionFilter());
 
+  const expressAdapter = app.getHttpAdapter().getInstance();
+  expressAdapter.use(require('express').json({ limit: '10mb' }));
+  expressAdapter.use(require('express').urlencoded({ limit: '10mb', extended: true }));
+
   const express = app.getHttpAdapter().getInstance();
 
   express.use((req, res, next) => {

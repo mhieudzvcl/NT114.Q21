@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Param, Patch } from "@nestjs/common";
+import { Body, Controller, Get, Param, Patch, Req } from "@nestjs/common";
 import { ApiOperation, ApiTags } from "@nestjs/swagger";
 import { AppService } from "./app.service";
 import { UpdateUserDto } from "./dto/user.dto";
@@ -15,8 +15,19 @@ export class AppController {
 
   @Get("/users/me")
   @ApiOperation({ summary: "Get current user profile" })
-  getMe() {
-    return this.appService.getMe();
+  getMe(@Req() req: any) {
+    const auth = req.headers.authorization || "";
+    const token = auth.replace("Bearer ", "");
+    let userId = "u_1";
+    let email = "";
+    if (token) {
+        try {
+            const payload = JSON.parse(Buffer.from(token.split('.')[1], 'base64').toString());
+            if (payload.sub) userId = payload.sub;
+            if (payload.email) email = payload.email;
+        } catch(e) {}
+    }
+    return this.appService.getMe(userId, email);
   }
 
   @Get("/users/:id")

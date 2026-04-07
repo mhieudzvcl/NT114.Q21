@@ -15,8 +15,14 @@ export class AppService implements OnModuleInit {
     return { service: "user-service", status: "ok", timestamp: new Date().toISOString() };
   }
 
-  async getMe(userId = "u_1") {
-    return ProfileModel.findOne({ userId }).lean();
+  async getMe(userId = "u_1", email = "") {
+    let profile = await ProfileModel.findOne({ userId }).lean();
+    if (!profile) {
+      const parts = email.split("@");
+      const fullName = parts[0] ? parts[0] : "New User";
+      profile = await ProfileModel.create({ userId, fullName });
+    }
+    return profile;
   }
 
   async getById(id: string) {
