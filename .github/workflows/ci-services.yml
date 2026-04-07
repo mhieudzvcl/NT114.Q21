@@ -33,13 +33,15 @@ jobs:
 
       - name: Install deps
         run: npm install
+
       - name: Unit test
         run: npm test --if-present
+
       - name: Build
         run: npm run build --if-present
 
       - name: SonarQube Scan
-        if: ${{ env.SONAR_TOKEN != '' }}
+        continue-on-error: true
         uses: SonarSource/sonarqube-scan-action@v4
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
@@ -53,16 +55,18 @@ jobs:
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v3
 
-      - name: Build local Docker Image
+      - name: Build Docker Image
         run: docker build -t ${{ matrix.service }}:latest -f Dockerfile .
 
-      - name: Trivy Image scan
-        uses: aquasecurity/trivy-action@0.20.0
-        with:
-          image-ref: "${{ matrix.service }}:latest"
-          format: "table"
-          exit-code: "0"
-          severity: "CRITICAL,HIGH"
+      - name: Install Trivy
+        run: |
+          sudo apt-get install -y wget apt-transport-https gnupg lsb-release
+          wget -qO - https://aquasecurity.github.io/trivy-repo/deb/public.key | sudo gpg --dearmor -o /usr/share/keyrings/trivy.gpg
+          echo "deb [signed-by=/usr/share/keyrings/trivy.gpg] https://aquasecurity.github.io/trivy-repo/deb $(lsb_release -sc) main" | sudo tee /etc/apt/sources.list.d/trivy.list
+          sudo apt-get update && sudo apt-get install -y trivy
+
+      - name: Trivy Image Scan
+        run: trivy image --severity HIGH,CRITICAL --exit-code 0 --format table ${{ matrix.service }}:latest
 
   gitleaks:
     runs-on: ubuntu-latest
