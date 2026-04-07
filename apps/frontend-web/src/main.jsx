@@ -210,6 +210,7 @@ function ShopPage({ addToast }) {
   const [cart, setCart] = useState([]);
   const [cartOpen, setCartOpen] = useState(false);
   const [added, setAdded] = useState(null);
+  const [selectedProduct, setSelectedProduct] = useState(null);
   const [loadingProducts, setLoadingProducts] = useState(true);
 
   const fetchProducts = useCallback(async () => {
@@ -276,6 +277,43 @@ function ShopPage({ addToast }) {
 
   return (
     <>
+      {/* Product Detail Modal */}
+      {selectedProduct && (
+        <div className="modal-overlay" onClick={() => setSelectedProduct(null)}>
+          <div className="modal" style={{ maxWidth: 480 }} onClick={e => e.stopPropagation()}>
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 12 }}>
+              <h3 style={{ margin: 0 }}>{selectedProduct.name}</h3>
+              <button className="icon-btn" onClick={() => setSelectedProduct(null)}><Icon name="x" /></button>
+            </div>
+            {selectedProduct.imageUrl ? (
+              <img src={selectedProduct.imageUrl} alt={selectedProduct.name}
+                style={{ width: '100%', maxHeight: 240, objectFit: 'cover', borderRadius: 10, marginBottom: 14 }} />
+            ) : (
+              <div style={{ width: '100%', height: 180, background: 'var(--surface2)', borderRadius: 10, display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: 14 }}>
+                <Icon name="box" size={56} />
+              </div>
+            )}
+            <div className="detail-grid" style={{ marginBottom: 12 }}>
+              <div className="detail-item"><span className="detail-label">SKU</span><code>{selectedProduct.sku}</code></div>
+              <div className="detail-item"><span className="detail-label">Danh mục</span><span>{selectedProduct.category || '—'}</span></div>
+              <div className="detail-item"><span className="detail-label">Tồn kho</span><span>{selectedProduct.stock} sản phẩm</span></div>
+              <div className="detail-item"><span className="detail-label">Trạng thái</span>
+                <span className={`status-badge status-${selectedProduct.status?.toLowerCase()}`}>{selectedProduct.status}</span>
+              </div>
+            </div>
+            {selectedProduct.description && (
+              <p style={{ color: 'var(--text2)', marginBottom: 16, lineHeight: 1.6 }}>{selectedProduct.description}</p>
+            )}
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+              <span style={{ fontSize: '1.4rem', fontWeight: 700, color: 'var(--accent)' }}>{fmtPrice(selectedProduct.price)}</span>
+              <button className="btn-primary" onClick={() => { addToCart(selectedProduct); setSelectedProduct(null); }}>
+                <Icon name="cart" size={16} /> Thêm vào giỏ
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
       {cartOpen && (
         <div className="drawer-overlay" onClick={() => setCartOpen(false)}>
           <div className="drawer" onClick={e => e.stopPropagation()}>
@@ -354,7 +392,7 @@ function ShopPage({ addToast }) {
         ) : (
           <div className="grid">
             {activeProducts.map(p => (
-              <div className="card" key={p._id}>
+              <div className="card" key={p._id} onClick={() => setSelectedProduct(p)} style={{ cursor: 'pointer' }}>
                 <div className="card-img-wrap">
                   {p.imageUrl ? (
                     <img src={p.imageUrl} alt={p.name} style={{ width: '100%', aspectRatio: '4/3', objectFit: 'cover' }} />
@@ -372,7 +410,7 @@ function ShopPage({ addToast }) {
                   <div className="card-footer">
                     <span className="card-price">{fmtPrice(p.price)}</span>
                     <button className={`add-btn ${added === p._id ? "added" : ""}`}
-                      onClick={() => addToCart(p)}>
+                      onClick={(e) => { e.stopPropagation(); addToCart(p); }}>
                       {added === p._id ? <Icon name="check" size={16} /> : <Icon name="plus" size={16} />}
                     </button>
                   </div>

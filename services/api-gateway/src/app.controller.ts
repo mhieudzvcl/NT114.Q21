@@ -75,9 +75,8 @@ export class AppController {
     return this.appService.product(`/api/v1/products/${id}`, undefined, undefined, "GET");
   }
 
-  @UseGuards(JwtAuthGuard)
-  @UseGuards(RolesGuard)
-  @Roles("ADMIN", "USER")
+  @UseGuards(JwtAuthGuard, RolesGuard)
+  @Roles("ADMIN")
   @ApiBearerAuth()
   @ApiBody({ schema: { type: "object", properties: { sku: { type: "string", example: "SKU-001" }, name: { type: "string", example: "Sản phẩm test" }, price: { type: "number", example: 150000 }, stock: { type: "number", example: 100 }, status: { type: "string", example: "ACTIVE" } } } })
   @Post("/products")
@@ -85,7 +84,8 @@ export class AppController {
     return this.appService.product("/api/v1/products", req.headers.authorization, body, "POST");
   }
 
-  @UseGuards(JwtAuthGuard)
+  @UseGuards(JwtAuthGuard, RolesGuard)
+  @Roles("ADMIN")
   @ApiBearerAuth()
   @ApiBody({ schema: { type: "object", properties: { name: { type: "string" }, price: { type: "number" }, stock: { type: "number" }, status: { type: "string" } } } })
   @Patch("/products/:id")
@@ -93,7 +93,8 @@ export class AppController {
     return this.appService.product(`/api/v1/products/${id}`, req.headers.authorization, body, "PATCH");
   }
 
-  @UseGuards(JwtAuthGuard)
+  @UseGuards(JwtAuthGuard, RolesGuard)
+  @Roles("ADMIN")
   @ApiBearerAuth()
   @Delete("/products/:id")
   deleteProduct(@Req() req: any, @Param("id") id: string) {
@@ -125,8 +126,7 @@ export class AppController {
     return this.appService.order(`/api/v1/orders/${id}`, req.headers.authorization, undefined, "GET");
   }
 
-  @UseGuards(JwtAuthGuard)
-  @UseGuards(RolesGuard)
+  @UseGuards(JwtAuthGuard, RolesGuard)
   @Roles("ADMIN")
   @ApiBearerAuth()
   @Patch("/orders/:id/status")

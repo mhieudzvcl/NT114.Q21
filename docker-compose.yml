@@ -62,6 +62,7 @@ services:
       - PORT=8084
       - MONGO_URI=${MONGO_URI}
       - DB_NAME=order_db
+      - NOTIFICATION_SERVICE_URL=http://notification-service:8085
     depends_on: [mongo]
 
   notification-service:
