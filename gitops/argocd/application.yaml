@@ -6,7 +6,7 @@ metadata:
 spec:
   project: default
   source:
-    repoURL: https://github.com/YOUR_ORG/YOUR_REPO.git
+    repoURL: https://github.com/mhieudzvcl/NT114.Q21.git
     targetRevision: main
     path: gitops/apps/dev
   destination:

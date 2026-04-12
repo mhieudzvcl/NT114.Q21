@@ -17,6 +17,9 @@ spec:
           image: humhieu/frontend-web:latest
           ports:
             - containerPort: 3000
+          env:
+            - name: VITE_API_BASE
+              value: "http://localhost:8080"
           resources:
             requests:
               cpu: "100m"

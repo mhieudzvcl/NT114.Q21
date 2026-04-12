@@ -20,6 +20,10 @@ spec:
           env:
             - name: PORT
               value: "8083"
+            - name: MONGO_URI
+              value: "mongodb://mongo:27017"
+            - name: DB_NAME
+              value: "product_db"
           resources:
             requests:
               cpu: "100m"

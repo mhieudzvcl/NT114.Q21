@@ -11,3 +11,4 @@ resources:
   - product-service.yaml
   - order-service.yaml
   - notification-service.yaml
+  - mongo.yaml
