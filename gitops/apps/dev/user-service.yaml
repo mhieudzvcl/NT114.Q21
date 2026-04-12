@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
         - name: user-service
-          image: mhieudzvcl/user-service:latest
+          image: humhieu/user-service:latest
           ports:
             - containerPort: 8082
           env:

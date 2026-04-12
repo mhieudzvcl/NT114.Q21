@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
         - name: notification-service
-          image: mhieudzvcl/notification-service:latest
+          image: humhieu/notification-service:latest
           ports:
             - containerPort: 8085
           env:

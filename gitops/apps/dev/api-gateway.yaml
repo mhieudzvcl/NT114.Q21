@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
         - name: api-gateway
-          image: mhieudzvcl/api-gateway:latest
+          image: humhieu/api-gateway:latest
           ports:
             - containerPort: 8080
           env:

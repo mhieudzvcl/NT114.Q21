@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
         - name: frontend-web
-          image: mhieudzvcl/frontend-web:latest
+          image: humhieu/frontend-web:latest
           ports:
             - containerPort: 3000
           resources:

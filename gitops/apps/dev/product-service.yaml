@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
         - name: product-service
-          image: mhieudzvcl/product-service:latest
+          image: humhieu/product-service:latest
           ports:
             - containerPort: 8083
           env:
