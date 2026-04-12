@@ -4,10 +4,12 @@ on:
   pull_request:
     paths:
       - "infra/terraform/**"
+  workflow_dispatch:
   push:
     branches: [ "main", "develop" ]
     paths:
       - "infra/terraform/**"
+      - ".github/workflows/iac-security.yml"
 
 jobs:
   terraform-security:
