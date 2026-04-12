@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
         - name: user-service
-          image: YOUR_ECR/user-service:latest
+          image: mhieudzvcl/user-service:latest
           ports:
             - containerPort: 8082
           env:

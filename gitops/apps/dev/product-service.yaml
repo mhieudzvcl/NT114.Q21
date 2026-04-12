@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
         - name: product-service
-          image: YOUR_ECR/product-service:latest
+          image: mhieudzvcl/product-service:latest
           ports:
             - containerPort: 8083
           env:

@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
         - name: frontend-web
-          image: YOUR_ECR/frontend-web:latest
+          image: mhieudzvcl/frontend-web:latest
           ports:
             - containerPort: 3000
           resources:

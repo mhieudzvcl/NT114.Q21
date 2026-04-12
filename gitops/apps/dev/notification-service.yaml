@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
         - name: notification-service
-          image: YOUR_ECR/notification-service:latest
+          image: mhieudzvcl/notification-service:latest
           ports:
             - containerPort: 8085
           env:
