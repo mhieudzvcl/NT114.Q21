@@ -68,6 +68,19 @@ jobs:
       - name: Trivy Image Scan
         run: trivy image --severity HIGH,CRITICAL --exit-code 0 --format table ${{ matrix.service }}:latest
 
+      - name: Login to Docker Hub
+        if: github.ref == 'refs/heads/main'
+        uses: docker/login-action@v3
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+
+      - name: Tag and Push Docker Image
+        if: github.ref == 'refs/heads/main'
+        run: |
+          docker tag ${{ matrix.service }}:latest ${{ secrets.DOCKERHUB_USERNAME }}/${{ matrix.service }}:latest
+          docker push ${{ secrets.DOCKERHUB_USERNAME }}/${{ matrix.service }}:latest
+
   gitleaks:
     runs-on: ubuntu-latest
     steps:
