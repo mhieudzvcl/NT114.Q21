@@ -19,7 +19,7 @@ data:
           "gridPos": { "h": 8, "w": 12, "x": 0, "y": 0 },
           "targets": [
             {
-              "expr": "sum by(service) (app_request_duration_ms_sum{app_group=\"thesis-microservices\"}) / clamp_min(sum by(service) (app_request_duration_ms_count{app_group=\"thesis-microservices\"}), 1)",
+              "expr": "sum by(service) (app_request_duration_ms_sum) / clamp_min(sum by(service) (app_request_duration_ms_count), 1)",
               "legendFormat": "{{service}}"
             }
           ]
@@ -30,7 +30,7 @@ data:
           "gridPos": { "h": 8, "w": 12, "x": 12, "y": 0 },
           "targets": [
             {
-              "expr": "max by(service) (app_request_duration_ms_max{app_group=\"thesis-microservices\"})",
+              "expr": "max by(service) (app_request_duration_ms_max)",
               "legendFormat": "{{service}}"
             }
           ]
@@ -41,7 +41,7 @@ data:
           "gridPos": { "h": 8, "w": 12, "x": 0, "y": 8 },
           "targets": [
             {
-              "expr": "sum by(service) (rate(app_requests_total{app_group=\"thesis-microservices\"}[1m]))",
+              "expr": "sum by(service) (rate(app_requests_total[1m]))",
               "legendFormat": "{{service}}"
             }
           ]
@@ -52,7 +52,7 @@ data:
           "gridPos": { "h": 8, "w": 12, "x": 12, "y": 8 },
           "targets": [
             {
-              "expr": "sum by(service) (rate(app_requests_status_total{app_group=\"thesis-microservices\",status_code=~\"4..|5..\"}[1m]))",
+              "expr": "sum by(service) (rate(app_requests_status_total{status_code=~\"4..|5..\"}[1m]))",
               "legendFormat": "{{service}}"
             }
           ]

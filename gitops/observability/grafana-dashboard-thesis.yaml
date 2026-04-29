@@ -40,7 +40,7 @@ data:
           "gridPos": { "h": 8, "w": 24, "x": 0, "y": 6 },
           "targets": [
             {
-              "expr": "nodejs_process_heap_used_bytes{app_group=\"thesis-microservices\"}",
+              "expr": "nodejs_process_heap_used_bytes",
               "legendFormat": "{{instance}}"
             }
           ]
