@@ -13,10 +13,11 @@ export const options = {
   }
 };
 
-const BASE = __ENV.BASE_URL || "http://localhost:8080";
+const BASE = __ENV.BASE_URL || "http://127.0.0.1:19090";
 let token = "";
 
 function auth() {
+  // NestJS globalPrefix = "api/v1" → tất cả routes có prefix /api/v1/
   http.post(`${BASE}/api/v1/auth/register`, JSON.stringify({
     email: "admin@example.com",
     password: "12345678"
@@ -27,8 +28,13 @@ function auth() {
     password: "12345678"
   }), { headers: { "Content-Type": "application/json" } });
 
-  const body = login.json();
-  token = body?.data?.accessToken || body?.accessToken || "";
+  // Xử lý an toàn: chỉ parse JSON nếu response là JSON hợp lệ
+  try {
+    const body = login.json();
+    token = body?.data?.data?.accessToken || body?.data?.accessToken || body?.accessToken || "";
+  } catch (_) {
+    token = "";
+  }
 }
 
 export default function () {
@@ -47,8 +53,9 @@ export default function () {
   );
   check(order, { "order ok": (r) => r.status < 500 });
 
+  // Route: POST /api/v1/notifications (không có /test)
   const notify = http.post(
-    `${BASE}/api/v1/notifications/test`,
+    `${BASE}/api/v1/notifications`,
     JSON.stringify({ userId: "u_1", channel: "EMAIL", title: "k6", content: "load test" }),
     { headers }
   );
