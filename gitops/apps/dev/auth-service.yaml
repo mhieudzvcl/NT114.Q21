@@ -25,7 +25,10 @@ spec:
             - name: DB_NAME
               value: "auth_db"
             - name: JWT_SECRET
-              value: "my-super-secret-key-2026"
+              valueFrom:
+                secretKeyRef:
+                  name: app-secrets
+                  key: JWT_SECRET
           resources:
             requests:
               cpu: "100m"

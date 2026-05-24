@@ -3,6 +3,7 @@ kind: Kustomization
 namespace: thesis-dev
 resources:
   - namespace.yaml
+  - app-secrets.yaml
   - ingress.yaml
   - frontend-web.yaml
   - api-gateway.yaml

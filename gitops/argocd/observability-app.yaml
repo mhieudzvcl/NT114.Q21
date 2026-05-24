@@ -1,0 +1,21 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: thesis-observability
+  namespace: argocd
+spec:
+  project: default
+  source:
+    repoURL: https://github.com/mhieudzvcl/NT114.Q21.git
+    targetRevision: main
+    path: gitops/observability
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: observability
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+      - CreateNamespace=true
+      - ServerSideApply=true

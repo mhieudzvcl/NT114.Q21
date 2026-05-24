@@ -31,7 +31,10 @@ spec:
             - name: NOTIFICATION_SERVICE_URL
               value: "http://notification-service.thesis-dev.svc.cluster.local:8085"
             - name: JWT_SECRET
-              value: "my-super-secret-key-2026"
+              valueFrom:
+                secretKeyRef:
+                  name: app-secrets
+                  key: JWT_SECRET
           resources:
             requests:
               cpu: "100m"
