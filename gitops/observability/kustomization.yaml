@@ -2,6 +2,7 @@ apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 resources:
   - namespace.yaml
+  - prometheus-rbac.yaml
   - prometheus-config.yaml
   - prometheus.yaml
   - grafana-datasource.yaml
@@ -9,6 +10,7 @@ resources:
   - grafana-dashboard-thesis.yaml
   - grafana.yaml
   - loki.yaml
+  - promtail.yaml
   - grafana-secret.yaml
   - grafana-dashboard-latency.yaml
   - ingress.yaml
