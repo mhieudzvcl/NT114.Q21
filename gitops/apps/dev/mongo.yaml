@@ -29,9 +29,7 @@ spec:
               mountPath: /data/db
       volumes:
         - name: mongo-data
-          hostPath:
-            path: /data/mongo-thesis
-            type: DirectoryOrCreate
+          emptyDir: {}
 ---
 apiVersion: v1
 kind: Service

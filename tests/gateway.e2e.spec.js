@@ -25,7 +25,7 @@ describe("Gateway E2E flow", () => {
     });
 
     expect(loginRes.status).toBeLessThan(500);
-    token = loginRes.body?.data?.accessToken || loginRes.body?.accessToken || "";
+    token = loginRes.body?.data?.data?.accessToken || loginRes.body?.data?.accessToken || loginRes.body?.accessToken || "";
     expect(token).toBeTruthy();
   });
 
