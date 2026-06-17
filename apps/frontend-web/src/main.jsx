@@ -2,9 +2,8 @@ import React, { useState, useEffect, useMemo, useCallback, createContext, useCon
 import { createRoot } from "react-dom/client";
 import "./index.css";
 
-/* ================================================================
-   API LAYER
-   ================================================================ */
+
+//API LAYER
 const API = import.meta.env.VITE_API_BASE || "http://localhost:8080";
 
 function authHeaders() {
@@ -31,9 +30,7 @@ async function api(path, opts = {}) {
   return result;
 }
 
-/* ================================================================
-   AUTH CONTEXT
-   ================================================================ */
+//AUTH CONTEXT
 const AuthCtx = createContext(null);
 
 function AuthProvider({ children }) {
@@ -85,9 +82,7 @@ function AuthProvider({ children }) {
 
 function useAuth() { return useContext(AuthCtx); }
 
-/* ================================================================
-   TOAST
-   ================================================================ */
+//TOAST
 let _toastId = 0;
 function ToastContainer({ toasts, removeToast }) {
   return (
@@ -102,9 +97,7 @@ function ToastContainer({ toasts, removeToast }) {
   );
 }
 
-/* ================================================================
-   SVG ICONS
-   ================================================================ */
+//SVG ICONS
 const Icons = {
   store: <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z" /><polyline points="9 22 9 12 15 12 15 22" /></svg>,
   search: <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="11" cy="11" r="8" /><line x1="21" y1="21" x2="16.65" y2="16.65" /></svg>,
@@ -137,9 +130,7 @@ function Icon({ name, size = 18 }) {
   return <span className="icon" style={{ width: size, height: size }}>{Icons[name] || Icons.box}</span>;
 }
 
-/* ================================================================
-   PAGE: Auth
-   ================================================================ */
+//PAGE: Auth
 function AuthPage({ onNavigate, addToast }) {
   const { login, register } = useAuth();
   const [isLogin, setIsLogin] = useState(true);
@@ -199,9 +190,7 @@ function AuthPage({ onNavigate, addToast }) {
   );
 }
 
-/* ================================================================
-   PAGE: Shop
-   ================================================================ */
+//PAGE: Shop
 function ShopPage({ addToast }) {
   const { user } = useAuth();
   const [products, setProducts] = useState([]);
@@ -424,9 +413,7 @@ function ShopPage({ addToast }) {
   );
 }
 
-/* ================================================================
-   PAGE: Profile
-   ================================================================ */
+//PAGE: Profile
 function ProfilePage({ addToast }) {
   const { hydrateUser } = useAuth();
   const [profile, setProfile] = useState(null);
@@ -550,9 +537,7 @@ function ProfilePage({ addToast }) {
   );
 }
 
-/* ================================================================
-   PAGE: Admin Products
-   ================================================================ */
+//PAGE: Admin Products
 function AdminProductsPage({ addToast }) {
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -739,9 +724,7 @@ function AdminProductsPage({ addToast }) {
   );
 }
 
-/* ================================================================
-   PAGE: Orders
-   ================================================================ */
+//PAGE: Orders
 function OrdersPage({ addToast }) {
   const [orders, setOrders] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -854,9 +837,7 @@ function OrdersPage({ addToast }) {
   );
 }
 
-/* ================================================================
-   PAGE: Notifications
-   ================================================================ */
+//PAGE: Notifications
 function NotificationsPage({ addToast }) {
   const [notifications, setNotifications] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -970,9 +951,7 @@ function NotificationsPage({ addToast }) {
   );
 }
 
-/* ================================================================
-   MAIN APP
-   ================================================================ */
+//MAIN APP
 function App() {
   const [darkMode, setDarkMode] = useState(() => localStorage.getItem("theme") === "dark");
   const [page, setPage] = useState("shop");
