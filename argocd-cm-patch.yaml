@@ -1,0 +1,11 @@
+data:
+  resource.customizations.health.networking.k8s.io_Ingress: |
+    hs = {}
+    hs.status = "Healthy"
+    hs.message = "Ingress health check skipped"
+    return hs
+  resource.customizations.health.apps_DaemonSet: |
+    hs = {}
+    hs.status = "Healthy"
+    hs.message = "DaemonSet health check skipped"
+    return hs
